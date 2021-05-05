@@ -125,7 +125,6 @@ var MyToolkit = (function () {
       if (checkStateEvent != null) {
         checkStateEvent(currentCheckState);
       }
-      transition();
     });
     function transition() {
       if (widgetStateEvent != null) {
