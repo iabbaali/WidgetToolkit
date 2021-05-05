@@ -12,3 +12,13 @@ btn.onclick(function (e) {
 btn.stateChanged(function (event) {
   console.log(event);
 });
+
+var checkbox = new MyToolkit.CheckBox();
+checkbox.text = "Checkbox1";
+checkbox.move(10, 100);
+checkbox.checkStateChanged(function (e) {
+  console.log(e);
+});
+checkbox.widgetStateChanged(function (event) {
+  console.log(event);
+});
