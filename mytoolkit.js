@@ -97,8 +97,16 @@ var MyToolkit = (function () {
     var draw = SVG().addTo("body");
     var group = draw.group();
     var box = group.rect(30, 30).fill({ color: idleColor }).radius(10);
-    var check = group.rect(20, 20).fill({ color: pressedColor }).radius(5);
-    check.hide();
+    var line1 = group.line(box.x() - 20, box.y() + 20, box.x(), box.y());
+    line1.stroke({ color: pressedColor, width: 3, linecap: "round" });
+    line1.center(box.cx(), box.cy());
+    line1.hide();
+
+    var line2 = group.line(box.x(), box.y(), box.x() + 20, box.y() + 20);
+    line2.stroke({ color: pressedColor, width: 3, linecap: "round" });
+    line2.center(box.cx(), box.cy());
+    line2.hide();
+
     var text = group.text("").font({ family: "Lato, sans-serif" });
     text.x(box.x() + box.width());
     text.cy(box.cy());
@@ -116,11 +124,14 @@ var MyToolkit = (function () {
     group.click(function (event) {
       if (currentCheckState == checkStates.CHECKED) {
         currentCheckState = checkStates.UNCHECKED;
-        check.hide();
+        line1.hide();
+        line2.hide();
       } else if (currentCheckState == checkStates.UNCHECKED) {
         currentCheckState = checkStates.CHECKED;
-        check.show();
-        check.center(box.cx(), box.cy());
+        line1.show();
+        line2.show();
+        line1.center(box.cx(), box.cy());
+        line2.center(box.cx(), box.cy());
       }
       if (checkStateEvent != null) {
         checkStateEvent(currentCheckState);
