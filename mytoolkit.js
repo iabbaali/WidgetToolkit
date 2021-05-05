@@ -2,58 +2,64 @@
 
 import { SVG } from "./svg.min.js";
 
+var idleColor = "#7CB9E8";
+var pressedColor = "#002D62";
+var hoverColor = "#545AA7";
+var textColor = "#fff";
+
 var MyToolkit = (function () {
   var Button = function () {
+    const states = {
+      IDLE: "idle",
+      PRESSED: "pressed",
+      EXECUTE: "execute",
+      HOVER: "hover",
+    };
+
     var clickEvent = null;
-    var defaultState = "idle";
+    var currentState = states.IDLE;
     var stateEvent = null;
 
     var draw = SVG().addTo("body");
-
     var group = draw.group();
-    var rect = group.rect(100, 50).fill("red");
-    var text = group.text("");
+    var rect = group.rect(100, 50).fill({ color: idleColor }).radius(20);
+    var text = group
+      .text("")
+      .font({ family: "Lato, sans-serif", size: 18 })
+      .fill({ color: textColor });
 
     text.center(rect.width() / 2, rect.height() / 2);
 
     rect.mouseover(function () {
-      this.fill({ color: "blue" });
-      defaultState = "hover";
+      rect.fill({ color: hoverColor });
+      currentState = states.HOVER;
       transition();
     });
     rect.mouseout(function () {
-      this.fill({ color: "red" });
-      defaultState = "idle";
+      rect.fill({ color: idleColor });
+      currentState = states.IDLE;
       transition();
     });
     rect.mouseup(function (event) {
-      this.fill({ color: "red" });
-      if (defaultState == "pressed") {
-        // use enumeration instead
+      if (currentState == states.PRESSED) {
         if (clickEvent != null) {
+          currentState = states.EXECUTE;
+          transition();
           clickEvent(event);
         }
       }
-      defaultState = "up";
+      currentState = states.HOVER;
+      rect.fill({ color: hoverColor });
       transition();
     });
     rect.mousedown(function () {
-      this.fill({ color: "red" });
-      defaultState = "pressed";
+      rect.fill({ color: pressedColor });
+      currentState = states.PRESSED;
       transition();
     });
-    // rect.mousemove(function (event) {
-    //   if (stateEvent != null) {
-    //     stateEvent(defaultState);
-    //   }
-    // });
-    // rect.click(function (event) {
-    //   this.fill({ color: "pink" });
-    //   if (clickEvent != null) clickEvent(event);
-    // });
     function transition() {
       if (stateEvent != null) {
-        stateEvent(defaultState);
+        stateEvent(currentState);
       }
     }
     return {
@@ -65,9 +71,6 @@ var MyToolkit = (function () {
       },
       onclick: function (eventHandler) {
         clickEvent = eventHandler;
-      },
-      setID: function (id) {
-        rect.attr("id", id);
       },
       set text(content) {
         text.text(content);
