@@ -4,11 +4,17 @@ import { SVG } from "./svg.min.js";
 
 var MyToolkit = (function () {
   var Button = function () {
-    var draw = SVG().addTo("body").size("100%", "100%");
-    var rect = draw.rect(100, 50).fill("red");
     var clickEvent = null;
     var defaultState = "idle";
     var stateEvent = null;
+
+    var draw = SVG().addTo("body");
+
+    var group = draw.group();
+    var rect = group.rect(100, 50).fill("red");
+    var text = group.text("");
+
+    text.center(rect.width() / 2, rect.height() / 2);
 
     rect.mouseover(function () {
       this.fill({ color: "blue" });
@@ -20,7 +26,7 @@ var MyToolkit = (function () {
       defaultState = "idle";
       transition();
     });
-    rect.mouseup(function () {
+    rect.mouseup(function (event) {
       this.fill({ color: "red" });
       if (defaultState == "pressed") {
         // use enumeration instead
@@ -52,7 +58,7 @@ var MyToolkit = (function () {
     }
     return {
       move: function (x, y) {
-        rect.move(x, y);
+        group.move(x, y);
       },
       stateChanged: function (eventHandler) {
         stateEvent = eventHandler;
@@ -62,6 +68,10 @@ var MyToolkit = (function () {
       },
       setID: function (id) {
         rect.attr("id", id);
+      },
+      set text(content) {
+        text.text(content);
+        text.center(rect.width() / 2, rect.height() / 2);
       },
     };
   };
