@@ -8,14 +8,13 @@ var hoverColor = "#545AA7";
 var textColor = "#fff";
 
 var MyToolkit = (function () {
+  const states = {
+    IDLE: "idle",
+    PRESSED: "pressed",
+    EXECUTE: "execute",
+    HOVER: "hover",
+  };
   var Button = function () {
-    const states = {
-      IDLE: "idle",
-      PRESSED: "pressed",
-      EXECUTE: "execute",
-      HOVER: "hover",
-    };
-
     var clickEvent = null;
     var currentState = states.IDLE;
     var stateEvent = null;
@@ -83,14 +82,9 @@ var MyToolkit = (function () {
       UNCHECKED: "unchecked",
       CHECKED: "checked",
     };
-    const widgetStates = {
-      IDLE: "idle",
-      HOVER: "hover",
-      PRESSED: "pressed",
-    };
 
     var currentCheckState = checkStates.UNCHECKED;
-    var currentWidgetState = widgetStates.IDLE;
+    var currentWidgetState = states.IDLE;
 
     var checkStateEvent = null;
     var widgetStateEvent = null;
@@ -114,12 +108,12 @@ var MyToolkit = (function () {
 
     box.mouseover(function () {
       box.fill({ color: hoverColor });
-      currentWidgetState = widgetStates.HOVER;
+      currentWidgetState = states.HOVER;
       transition();
     });
     box.mouseout(function () {
       box.fill({ color: idleColor });
-      currentWidgetState = widgetStates.IDLE;
+      currentWidgetState = states.IDLE;
       transition();
     });
     group.click(function (event) {
@@ -134,7 +128,7 @@ var MyToolkit = (function () {
         line1.center(box.cx(), box.cy());
         line2.center(box.cx(), box.cy());
       }
-      currentWidgetState = widgetStates.PRESSED;
+      currentWidgetState = states.PRESSED;
       if (checkStateEvent != null) {
         checkStateEvent(currentCheckState);
       }
@@ -166,8 +160,7 @@ var MyToolkit = (function () {
     var checkStateEvent = null;
     var widgetStateEvent = null;
 
-    const widgetStates = { HOVER: "hover", IDLE: "idle", PRESSED: "pressed" };
-    var currentWidgetState = widgetStates.IDLE;
+    var currentWidgetState = states.IDLE;
 
     const clearOptions = () => {
       var j = -1;
@@ -242,18 +235,18 @@ var MyToolkit = (function () {
         if (checkStateEvent != null) {
           checkStateEvent(i);
         }
-        currentWidgetState = widgetStates.PRESSED;
+        currentWidgetState = states.PRESSED;
         transition();
         updateState(options, innerBoxes);
       });
       outerBoxes[i].mouseover(() => {
         outerBoxes[i].fill({ color: hoverColor });
-        currentWidgetState = widgetStates.HOVER;
+        currentWidgetState = states.HOVER;
         transition();
       });
       outerBoxes[i].mouseout(() => {
         outerBoxes[i].fill({ color: idleColor });
-        currentWidgetState = widgetStates.IDLE;
+        currentWidgetState = states.IDLE;
         transition();
       });
     }
