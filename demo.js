@@ -23,9 +23,9 @@ checkbox.widgetStateChanged(function (event) {
 });
 
 var options = [
+  ["RadioButton 0", false],
   ["RadioButton 1", false],
-  ["RadioButton 2", false],
-  ["RadioButton 3", false],
+  ["RadioButton 2", true],
 ];
 var radiobutton = new MyToolkit.RadioButton(options);
 radiobutton.move(10, 10);

@@ -86,6 +86,7 @@ var MyToolkit = (function () {
     const widgetStates = {
       IDLE: "idle",
       HOVER: "hover",
+      PRESSED: "pressed",
     };
 
     var currentCheckState = checkStates.UNCHECKED;
@@ -133,9 +134,11 @@ var MyToolkit = (function () {
         line1.center(box.cx(), box.cy());
         line2.center(box.cx(), box.cy());
       }
+      currentWidgetState = widgetStates.PRESSED;
       if (checkStateEvent != null) {
         checkStateEvent(currentCheckState);
       }
+      transition();
     });
     function transition() {
       if (widgetStateEvent != null) {
@@ -160,6 +163,12 @@ var MyToolkit = (function () {
     };
   };
   var RadioButton = function (options) {
+    var checkStateEvent = null;
+    var widgetStateEvent = null;
+
+    const widgetStates = { HOVER: "hover", IDLE: "idle", PRESSED: "pressed" };
+    var currentWidgetState = widgetStates.IDLE;
+
     const clearOptions = () => {
       var j = -1;
       for (let i = 0; i < options.length; ++i) {
@@ -184,6 +193,13 @@ var MyToolkit = (function () {
         }
       }
     };
+
+    const transition = () => {
+      if (widgetStateEvent != null) {
+        widgetStateEvent(currentWidgetState);
+      }
+    };
+
     const resetOptions = () => {
       for (let i = 0; i < options.length; ++i) {
         let opt = options[i];
@@ -223,19 +239,32 @@ var MyToolkit = (function () {
       outerBoxes[i].click(function (event) {
         resetOptions();
         options[i][1] = true;
+        if (checkStateEvent != null) {
+          checkStateEvent(i);
+        }
+        currentWidgetState = widgetStates.PRESSED;
+        transition();
         updateState(options, innerBoxes);
       });
     }
 
+    outer.mouseover(function () {
+      currentWidgetState = widgetStates.HOVER;
+      transition();
+    });
+    outer.mouseout(function () {
+      currentWidgetState = widgetStates.IDLE;
+      transition();
+    });
     return {
       move: function (x, y) {
         outer.move(x, y);
       },
       widgetStateChanged: function (eventHandler) {
-        // widgetStateEvent = eventHandler;
+        widgetStateEvent = eventHandler;
       },
       checkStateChanged: function (eventHandler) {
-        // checkStateEvent = eventHandler;
+        checkStateEvent = eventHandler;
       },
     };
   };
