@@ -246,16 +246,17 @@ var MyToolkit = (function () {
         transition();
         updateState(options, innerBoxes);
       });
+      outerBoxes[i].mouseover(() => {
+        outerBoxes[i].fill({ color: hoverColor });
+        currentWidgetState = widgetStates.HOVER;
+        transition();
+      });
+      outerBoxes[i].mouseout(() => {
+        outerBoxes[i].fill({ color: idleColor });
+        currentWidgetState = widgetStates.IDLE;
+        transition();
+      });
     }
-
-    outer.mouseover(function () {
-      currentWidgetState = widgetStates.HOVER;
-      transition();
-    });
-    outer.mouseout(function () {
-      currentWidgetState = widgetStates.IDLE;
-      transition();
-    });
     return {
       move: function (x, y) {
         outer.move(x, y);
