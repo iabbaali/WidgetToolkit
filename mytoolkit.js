@@ -159,7 +159,99 @@ var MyToolkit = (function () {
       },
     };
   };
-  return { Button, CheckBox };
+  var RadioButton = function (options) {
+    const clearOptions = () => {
+      var j = -1;
+      for (let i = 0; i < options.length; ++i) {
+        let opt = options[i];
+        if (opt[1] === true) {
+          j = i;
+        }
+        opt[1] = false;
+      }
+      if (j !== -1) {
+        options[j][1] = true;
+      }
+    };
+    clearOptions();
+
+    const checkStates = {
+      UNCHECKED: "unchecked",
+      CHECKED: "checked",
+    };
+    const widgetStates = {
+      IDLE: "idle",
+      HOVER: "hover",
+    };
+
+    var currentCheckState = checkStates.UNCHECKED;
+    var currentWidgetState = widgetStates.IDLE;
+
+    var checkStateEvent = null;
+    var widgetStateEvent = null;
+
+    var draw = SVG().addTo("body").size("100%", "100%");
+    var outer = draw.group();
+    var currY = null;
+    for (let opt of options) {
+      let group = outer.group();
+      let box = group.rect(30, 30).fill({ color: idleColor }).radius(10);
+      let text = group.text(opt[0]).font({ family: "Lato, sans-serif" });
+
+      text.x(box.x() + box.width());
+      text.cy(box.cy());
+
+      if (currY) {
+        group.y(currY + box.height() / 2);
+      }
+      currY = group.y() + box.height();
+    }
+    draw.size("100%", currY * 2);
+
+    // box.mouseover(function () {
+    //   box.fill({ color: hoverColor });
+    //   currentWidgetState = widgetStates.HOVER;
+    //   transition();
+    // });
+    // box.mouseout(function () {
+    //   box.fill({ color: idleColor });
+    //   currentWidgetState = widgetStates.IDLE;
+    //   transition();
+    // });
+    // group.click(function (event) {
+    //   if (currentCheckState == checkStates.CHECKED) {
+    //     currentCheckState = checkStates.UNCHECKED;
+    //     line1.hide();
+    //     line2.hide();
+    //   } else if (currentCheckState == checkStates.UNCHECKED) {
+    //     currentCheckState = checkStates.CHECKED;
+    //     line1.show();
+    //     line2.show();
+    //     line1.center(box.cx(), box.cy());
+    //     line2.center(box.cx(), box.cy());
+    //   }
+    //   if (checkStateEvent != null) {
+    //     checkStateEvent(currentCheckState);
+    //   }
+    // });
+    // function transition() {
+    //   if (widgetStateEvent != null) {
+    //     widgetStateEvent(currentWidgetState);
+    //   }
+    // }
+    return {
+      move: function (x, y) {
+        outer.move(x, y);
+      },
+      widgetStateChanged: function (eventHandler) {
+        widgetStateEvent = eventHandler;
+      },
+      checkStateChanged: function (eventHandler) {
+        checkStateEvent = eventHandler;
+      },
+    };
+  };
+  return { Button, CheckBox, RadioButton };
 })();
 
 export { MyToolkit };
