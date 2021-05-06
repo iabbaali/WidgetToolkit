@@ -13,6 +13,7 @@ var MyToolkit = (function () {
     PRESSED: "pressed",
     EXECUTE: "execute",
     HOVER: "hover",
+    UPDATE: "update",
   };
   var Button = function () {
     var clickEvent = null;
@@ -262,7 +263,103 @@ var MyToolkit = (function () {
       },
     };
   };
-  return { Button, CheckBox, RadioButton };
+  var TextBox = function () {
+    var textChangedEvent = null;
+    var widgetStateEvent = null;
+    var currentWidgetState = states.IDLE;
+
+    var draw = SVG().addTo("body");
+    var group = draw.group();
+    var box = group
+      .rect(225, 30)
+      .attr({
+        stroke: pressedColor,
+        fill: idleColor,
+        opacity: 0.5,
+        strokeColor: pressedColor,
+        "stroke-width": 1.5,
+      })
+      .radius(5);
+
+    var text = group.text("").font({ family: "Lato, sans-serif", size: 12 });
+    text.x(box.x());
+    text.cy(box.cy());
+
+    var caret = group.rect(2, 15).fill({ color: hoverColor });
+    caret.move(box.x() + text.length(), box.y());
+    caret.cy(box.cy());
+    caret.hide();
+    var runner = caret.animate().width(0);
+    runner.loop(1000, 1, 0);
+
+    const notifyTextChanged = (text) => {
+      if (textChangedEvent != null) {
+        textChangedEvent(text);
+      }
+    };
+
+    const transition = () => {
+      if (widgetStateEvent != null) {
+        widgetStateEvent(currentWidgetState);
+      }
+    };
+
+    SVG.on(window, "keyup", (event) => {
+      var prevState = currentWidgetState;
+      currentWidgetState = states.UPDATE;
+      transition();
+      switch (event.key) {
+        case "Backspace": {
+          let content = text.text().substring(0, text.text().length - 1);
+          text.text(content);
+          text.cy(box.cy());
+          caret.x(box.x() + text.length());
+          notifyTextChanged(text.text());
+          break;
+        }
+        case "Control": {
+        }
+        case "Shift": {
+          break;
+        }
+        default: {
+          if (text.length() < box.width() - 5) {
+            text.text(text.text() + event.key);
+            text.cy(box.cy());
+            caret.x(box.x() + text.length());
+            notifyTextChanged(text.text());
+          }
+        }
+      }
+      currentWidgetState = prevState;
+      transition();
+    });
+    box.mouseover(function () {
+      caret.show();
+      caret.move(box.x() + text.length(), box.y());
+      caret.cy(box.cy());
+      runner.loop(10000, 1, 0);
+      currentWidgetState = states.HOVER;
+      transition();
+    });
+    box.mouseout(function () {
+      currentWidgetState = states.IDLE;
+      transition();
+      caret.hide();
+    });
+    return {
+      move: function (x, y) {
+        group.move(x, y);
+      },
+      widgetStateChanged: function (eventHandler) {
+        widgetStateEvent = eventHandler;
+      },
+      textChanged: function (eventHandler) {
+        textChangedEvent = eventHandler;
+      },
+    };
+  };
+  return { Button, CheckBox, RadioButton, TextBox };
 })();
 
 export { MyToolkit };

@@ -22,6 +22,15 @@ checkbox.widgetStateChanged(function (event) {
   console.log(event);
 });
 
+var textbox = new MyToolkit.TextBox();
+textbox.move(30, 100);
+textbox.textChanged(function (e) {
+  console.log(e);
+});
+textbox.widgetStateChanged(function (event) {
+  console.log(event);
+});
+
 var options = [
   ["RadioButton 0", false],
   ["RadioButton 1", false],
