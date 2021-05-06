@@ -25,11 +25,10 @@ checkbox.widgetStateChanged(function (event) {
 var options = [
   ["RadioButton 1", false],
   ["RadioButton 2", false],
-  ["RadioButton 3", true],
-  ["RadioButton 4", false],
+  ["RadioButton 3", false],
 ];
 var radiobutton = new MyToolkit.RadioButton(options);
-radiobutton.move(10, 50);
+radiobutton.move(10, 10);
 radiobutton.checkStateChanged(function (e) {
   console.log(e);
 });

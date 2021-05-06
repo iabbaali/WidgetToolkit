@@ -173,22 +173,27 @@ var MyToolkit = (function () {
         options[j][1] = true;
       }
     };
+    const updateState = (options, innerBoxes) => {
+      for (let i = 0; i < options.length; i++) {
+        if (options[i][1] === true) {
+          innerBoxes[i].show();
+          innerBoxes[i].cx(outerBoxes[i].cx());
+          innerBoxes[i].cy(outerBoxes[i].cy());
+        } else {
+          innerBoxes[i].hide();
+        }
+      }
+    };
+    const resetOptions = () => {
+      for (let i = 0; i < options.length; ++i) {
+        let opt = options[i];
+        opt[1] = false;
+      }
+    };
     clearOptions();
 
-    const checkStates = {
-      UNCHECKED: "unchecked",
-      CHECKED: "checked",
-    };
-    const widgetStates = {
-      IDLE: "idle",
-      HOVER: "hover",
-    };
-
-    var currentCheckState = checkStates.UNCHECKED;
-    var currentWidgetState = widgetStates.IDLE;
-
-    var checkStateEvent = null;
-    var widgetStateEvent = null;
+    let outerBoxes = [];
+    let innerBoxes = [];
 
     var draw = SVG().addTo("body").size("100%", "100%");
     var outer = draw.group();
@@ -197,6 +202,11 @@ var MyToolkit = (function () {
       let group = outer.group();
       let box = group.rect(30, 30).fill({ color: idleColor }).radius(10);
       let text = group.text(opt[0]).font({ family: "Lato, sans-serif" });
+      let innerBox = group.rect(20, 20).fill({ color: pressedColor }).radius(5);
+      innerBox.cx(box.cx());
+      innerBox.cy(box.cy());
+      innerBoxes.push(innerBox);
+      outerBoxes.push(box);
 
       text.x(box.x() + box.width());
       text.cy(box.cy());
@@ -207,47 +217,25 @@ var MyToolkit = (function () {
       currY = group.y() + box.height();
     }
     draw.size("100%", currY * 2);
+    updateState(options, innerBoxes);
 
-    // box.mouseover(function () {
-    //   box.fill({ color: hoverColor });
-    //   currentWidgetState = widgetStates.HOVER;
-    //   transition();
-    // });
-    // box.mouseout(function () {
-    //   box.fill({ color: idleColor });
-    //   currentWidgetState = widgetStates.IDLE;
-    //   transition();
-    // });
-    // group.click(function (event) {
-    //   if (currentCheckState == checkStates.CHECKED) {
-    //     currentCheckState = checkStates.UNCHECKED;
-    //     line1.hide();
-    //     line2.hide();
-    //   } else if (currentCheckState == checkStates.UNCHECKED) {
-    //     currentCheckState = checkStates.CHECKED;
-    //     line1.show();
-    //     line2.show();
-    //     line1.center(box.cx(), box.cy());
-    //     line2.center(box.cx(), box.cy());
-    //   }
-    //   if (checkStateEvent != null) {
-    //     checkStateEvent(currentCheckState);
-    //   }
-    // });
-    // function transition() {
-    //   if (widgetStateEvent != null) {
-    //     widgetStateEvent(currentWidgetState);
-    //   }
-    // }
+    for (let i = 0; i < options.length; ++i) {
+      outerBoxes[i].click(function (event) {
+        resetOptions();
+        options[i][1] = true;
+        updateState(options, innerBoxes);
+      });
+    }
+
     return {
       move: function (x, y) {
         outer.move(x, y);
       },
       widgetStateChanged: function (eventHandler) {
-        widgetStateEvent = eventHandler;
+        // widgetStateEvent = eventHandler;
       },
       checkStateChanged: function (eventHandler) {
-        checkStateEvent = eventHandler;
+        // checkStateEvent = eventHandler;
       },
     };
   };
