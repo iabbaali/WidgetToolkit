@@ -464,8 +464,9 @@ var MyToolkit = (function () {
     };
   };
   var ProgressBar = function () {
-    // var currentState = states.IDLE;
-    // var stateEvent = null;
+    var currentState = states.IDLE;
+    var stateEvent = null;
+    var incrementEvent = null;
 
     var draw = SVG().addTo("body").size(225, 50);
     var group = draw.group().attr({
@@ -484,13 +485,13 @@ var MyToolkit = (function () {
 
     group.mouseover(function () {
       rect.fill({ color: hoverColor });
-      // currentState = states.HOVER;
-      // transition();
+      currentState = states.HOVER;
+      transition();
     });
     group.mouseout(function () {
       rect.fill({ color: idleColor });
-      // currentState = states.IDLE;
-      // transition();
+      currentState = states.IDLE;
+      transition();
     });
 
     function transition() {
@@ -503,7 +504,10 @@ var MyToolkit = (function () {
         group.move(x, y);
       },
       stateChanged: function (eventHandler) {
-        // stateEvent = eventHandler;
+        stateEvent = eventHandler;
+      },
+      progressIncremented: function (eventHandler) {
+        incrementEvent = eventHandler;
       },
       increment: function (value) {
         if (value >= 0 && value <= 100) {
@@ -516,6 +520,9 @@ var MyToolkit = (function () {
           }
           let scaledValue = (newValue * rect.width()) / 100;
           progress.width(scaledValue);
+          if (incrementEvent != null) {
+            incrementEvent("incremented");
+          }
         }
       },
       set width(w) {

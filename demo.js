@@ -35,7 +35,7 @@ scrollbar.stateChanged(function (event) {
 
 var progressbar = new MyToolkit.ProgressBar();
 progressbar.width = 200;
-progressbar.move(20, 20);
+progressbar.move(10, 10);
 setInterval(loopProgressBar, 1000);
 function loopProgressBar() {
   if (progressbar.incrementValue >= 100) {
@@ -45,6 +45,9 @@ function loopProgressBar() {
   }
 }
 progressbar.stateChanged(function (event) {
+  console.log(event);
+});
+progressbar.progressIncremented(function (event) {
   console.log(event);
 });
 
@@ -63,7 +66,7 @@ var options = [
   ["RadioButton 2", true],
 ];
 var radiobutton = new MyToolkit.RadioButton(options);
-radiobutton.move(10, 10);
+radiobutton.move(30, 10);
 radiobutton.checkStateChanged(function (e) {
   console.log(e);
 });
