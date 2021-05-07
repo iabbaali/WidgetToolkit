@@ -26,7 +26,7 @@ var scrollbar = new MyToolkit.ScrollBar();
 scrollbar.height = 150;
 console.log(scrollbar.thumbPosition);
 scrollbar.move(10, 10);
-scrollbar.onclick(function (e) {
+scrollbar.scrollThumbMoved(function (e) {
   console.log(e);
 });
 scrollbar.stateChanged(function (event) {

@@ -366,9 +366,9 @@ var MyToolkit = (function () {
     };
   };
   var ScrollBar = function () {
-    // var clickEvent = null;
-    // var currentState = states.IDLE;
-    // var stateEvent = null;
+    var scrollThumbEvent = null;
+    var currentState = states.IDLE;
+    var stateEvent = null;
 
     var draw = SVG().addTo("body").size(50, 250);
     var group = draw.group().attr({
@@ -402,9 +402,14 @@ var MyToolkit = (function () {
     thumb.cx(rect.cx());
 
     group.mouseover(function () {
-      // rect.fill({ color: hoverColor });
-      // currentState = states.HOVER;
-      // transition();
+      rect.fill({ color: hoverColor, opacity: 0.7 });
+      currentState = states.HOVER;
+      transition();
+    });
+    group.mouseout(function () {
+      rect.fill({ color: idleColor });
+      currentState = states.IDLE;
+      transition();
     });
     topGroup.click(function () {
       let topMax = topArrow.height() + 10;
@@ -412,6 +417,11 @@ var MyToolkit = (function () {
         return;
       }
       thumb.y(thumb.y() - 10);
+      currentState = states.UPDATE;
+      transition();
+      if (scrollThumbEvent != null) {
+        scrollThumbEvent("up");
+      }
     });
     bottomGroup.click(function () {
       let bottomMax = rect.height();
@@ -419,10 +429,15 @@ var MyToolkit = (function () {
         return;
       }
       thumb.y(thumb.y() + 10);
+      currentState = states.UPDATE;
+      transition();
+      if (scrollThumbEvent != null) {
+        scrollThumbEvent("down");
+      }
     });
     function transition() {
       if (stateEvent != null) {
-        // stateEvent(currentState);
+        stateEvent(currentState);
       }
     }
     return {
@@ -430,10 +445,10 @@ var MyToolkit = (function () {
         group.move(x, y);
       },
       stateChanged: function (eventHandler) {
-        // stateEvent = eventHandler;
+        stateEvent = eventHandler;
       },
-      onclick: function (eventHandler) {
-        // clickEvent = eventHandler;
+      scrollThumbMoved: function (eventHandler) {
+        scrollThumbEvent = eventHandler;
       },
       set height(h) {
         rect.height(h);
