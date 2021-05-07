@@ -463,7 +463,75 @@ var MyToolkit = (function () {
       },
     };
   };
-  return { Button, CheckBox, RadioButton, TextBox, ScrollBar };
+  var ProgressBar = function () {
+    // var currentState = states.IDLE;
+    // var stateEvent = null;
+
+    var draw = SVG().addTo("body").size(225, 50);
+    var group = draw.group().attr({
+      stroke: pressedColor,
+      fill: idleColor,
+      strokeColor: "#000",
+      "stroke-width": 1,
+    });
+    var rect = group
+      .rect(200, 15)
+      .fill({ color: idleColor, opacity: 0.5 })
+      .radius(2);
+
+    var progress = group.rect(0, 14).fill({ color: pressedColor }).radius(2);
+    progress.cy(rect.cy());
+
+    group.mouseover(function () {
+      rect.fill({ color: hoverColor });
+      // currentState = states.HOVER;
+      // transition();
+    });
+    group.mouseout(function () {
+      rect.fill({ color: idleColor });
+      // currentState = states.IDLE;
+      // transition();
+    });
+
+    function transition() {
+      if (stateEvent != null) {
+        stateEvent(currentState);
+      }
+    }
+    return {
+      move: function (x, y) {
+        group.move(x, y);
+      },
+      stateChanged: function (eventHandler) {
+        // stateEvent = eventHandler;
+      },
+      increment: function (value) {
+        if (value >= 0 && value <= 100) {
+          let currValue = (progress.width() * 100) / rect.width();
+          let newValue = 0;
+          if (currValue + value >= 100) {
+            newValue = 100;
+          } else {
+            newValue = currValue + value;
+          }
+          let scaledValue = (newValue * rect.width()) / 100;
+          progress.width(scaledValue);
+        }
+      },
+      set width(w) {
+        rect.width(w);
+        draw.width(w * 1.5);
+      },
+      set incrementValue(i) {
+        let scaledValue = (i * rect.width()) / 100;
+        progress.width(scaledValue);
+      },
+      get incrementValue() {
+        return (progress.width() * 100) / rect.width();
+      },
+    };
+  };
+  return { Button, CheckBox, RadioButton, TextBox, ScrollBar, ProgressBar };
 })();
 
 export { MyToolkit };

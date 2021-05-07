@@ -33,6 +33,21 @@ scrollbar.stateChanged(function (event) {
   console.log(event);
 });
 
+var progressbar = new MyToolkit.ProgressBar();
+progressbar.width = 200;
+progressbar.move(20, 20);
+setInterval(loopProgressBar, 1000);
+function loopProgressBar() {
+  if (progressbar.incrementValue >= 100) {
+    progressbar.incrementValue = 0;
+  } else {
+    progressbar.increment(10);
+  }
+}
+progressbar.stateChanged(function (event) {
+  console.log(event);
+});
+
 var textbox = new MyToolkit.TextBox();
 textbox.move(30, 100);
 textbox.textChanged(function (e) {
