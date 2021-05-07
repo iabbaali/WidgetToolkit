@@ -210,9 +210,9 @@ var MyToolkit = (function () {
     var currY = null;
     for (let opt of options) {
       let group = outer.group();
-      let box = group.rect(30, 30).fill({ color: idleColor }).radius(10);
+      let box = group.circle(25).fill({ color: idleColor });
       let text = group.text(opt[0]).font({ family: "Lato, sans-serif" });
-      let innerBox = group.rect(20, 20).fill({ color: pressedColor }).radius(5);
+      let innerBox = group.circle(18).fill({ color: pressedColor });
       innerBox.cx(box.cx());
       innerBox.cy(box.cy());
       innerBoxes.push(innerBox);
@@ -307,6 +307,7 @@ var MyToolkit = (function () {
     SVG.on(window, "keyup", (event) => {
       var prevState = currentWidgetState;
       currentWidgetState = states.UPDATE;
+      let previousText = text.text();
       transition();
       switch (event.key) {
         case "Backspace": {
@@ -314,7 +315,10 @@ var MyToolkit = (function () {
           text.text(content);
           text.cy(box.cy());
           caret.x(box.x() + text.length());
-          notifyTextChanged(text.text());
+          if (text.text() !== previousText) {
+            notifyTextChanged(text.text());
+          }
+
           break;
         }
         case "Control": {
@@ -327,7 +331,9 @@ var MyToolkit = (function () {
             text.text(text.text() + event.key);
             text.cy(box.cy());
             caret.x(box.x() + text.length());
-            notifyTextChanged(text.text());
+            if (text.text() !== previousText) {
+              notifyTextChanged(text.text());
+            }
           }
         }
       }
