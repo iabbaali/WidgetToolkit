@@ -379,21 +379,27 @@ var MyToolkit = (function () {
     });
     var rect = group.rect(25, 150).fill({ color: idleColor }).radius(2);
     var topBtn = group
-      .rect(25, 25)
+      .rect(rect.height() / 6, rect.height() / 6)
       .fill({ color: pressedColor })
-      .move(rect.x(), rect.y() - 25);
+      .move(rect.x(), rect.y() - rect.height() / 6);
     var topArrow = group.polygon("50, 0, 70, 40, 30, 40").size(20, 20);
     topArrow.cx(topBtn.cx());
     topArrow.cy(topBtn.cy());
     var bottomBtn = group
-      .rect(25, 25)
+      .rect(rect.height() / 6, rect.height() / 6)
       .fill({ color: pressedColor })
-      .move(rect.x(), rect.y() + 150);
+      .move(rect.x(), rect.y() + rect.height());
     var bottomArrow = group.polygon("30, 0, 50, 40, 70, 0").size(20, 20);
     bottomArrow.cx(bottomBtn.cx());
     bottomArrow.cy(bottomBtn.cy());
+    var thumb = group
+      .rect(rect.height() / 6 - 4, rect.height() / 6)
+      .fill({ color: pressedColor })
+      .radius(2);
+    thumb.y(thumb.y() + 2);
+    thumb.cx(rect.cx());
 
-    rect.mouseover(function () {
+    group.mouseover(function () {
       rect.fill({ color: hoverColor });
       // currentState = states.HOVER;
       // transition();
@@ -417,6 +423,14 @@ var MyToolkit = (function () {
       },
       onclick: function (eventHandler) {
         // clickEvent = eventHandler;
+      },
+      set height(h) {
+        rect.height(h);
+        draw.height(h * 1.75);
+        bottomBtn.move(rect.x(), rect.y() + rect.height());
+        bottomArrow.move(rect.x(), rect.y() + rect.height());
+        bottomArrow.cx(rect.cx());
+        bottomArrow.cy(bottomBtn.cy());
       },
     };
   };

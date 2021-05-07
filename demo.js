@@ -23,6 +23,7 @@ checkbox.widgetStateChanged(function (event) {
 });
 
 var scrollbar = new MyToolkit.ScrollBar();
+scrollbar.height = 150;
 scrollbar.move(10, 10);
 scrollbar.onclick(function (e) {
   console.log(e);
