@@ -365,7 +365,62 @@ var MyToolkit = (function () {
       },
     };
   };
-  return { Button, CheckBox, RadioButton, TextBox };
+  var ScrollBar = function () {
+    // var clickEvent = null;
+    // var currentState = states.IDLE;
+    // var stateEvent = null;
+
+    var draw = SVG().addTo("body").size(50, 250);
+    var group = draw.group().attr({
+      stroke: pressedColor,
+      fill: idleColor,
+      strokeColor: "#000",
+      "stroke-width": 1,
+    });
+    var rect = group.rect(25, 150).fill({ color: idleColor }).radius(2);
+    var topBtn = group
+      .rect(25, 25)
+      .fill({ color: pressedColor })
+      .move(rect.x(), rect.y() - 25);
+    var topArrow = group.polygon("50, 0, 70, 40, 30, 40").size(20, 20);
+    topArrow.cx(topBtn.cx());
+    topArrow.cy(topBtn.cy());
+    var bottomBtn = group
+      .rect(25, 25)
+      .fill({ color: pressedColor })
+      .move(rect.x(), rect.y() + 150);
+    var bottomArrow = group.polygon("30, 0, 50, 40, 70, 0").size(20, 20);
+    bottomArrow.cx(bottomBtn.cx());
+    bottomArrow.cy(bottomBtn.cy());
+
+    rect.mouseover(function () {
+      rect.fill({ color: hoverColor });
+      // currentState = states.HOVER;
+      // transition();
+    });
+    rect.mouseout(function () {
+      rect.fill({ color: idleColor });
+      // currentState = states.IDLE;
+      // transition();
+    });
+    function transition() {
+      if (stateEvent != null) {
+        // stateEvent(currentState);
+      }
+    }
+    return {
+      move: function (x, y) {
+        group.move(x, y);
+      },
+      stateChanged: function (eventHandler) {
+        // stateEvent = eventHandler;
+      },
+      onclick: function (eventHandler) {
+        // clickEvent = eventHandler;
+      },
+    };
+  };
+  return { Button, CheckBox, RadioButton, TextBox, ScrollBar };
 })();
 
 export { MyToolkit };

@@ -22,6 +22,15 @@ checkbox.widgetStateChanged(function (event) {
   console.log(event);
 });
 
+var scrollbar = new MyToolkit.ScrollBar();
+scrollbar.move(10, 10);
+scrollbar.onclick(function (e) {
+  console.log(e);
+});
+scrollbar.stateChanged(function (event) {
+  console.log(event);
+});
+
 var textbox = new MyToolkit.TextBox();
 textbox.move(30, 100);
 textbox.textChanged(function (e) {
