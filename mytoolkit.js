@@ -378,18 +378,20 @@ var MyToolkit = (function () {
       "stroke-width": 1,
     });
     var rect = group.rect(25, 150).fill({ color: idleColor }).radius(2);
-    var topBtn = group
+    var topGroup = group.group();
+    var topBtn = topGroup
       .rect(rect.height() / 6, rect.height() / 6)
       .fill({ color: pressedColor })
       .move(rect.x(), rect.y() - rect.height() / 6);
-    var topArrow = group.polygon("50, 0, 70, 40, 30, 40").size(20, 20);
+    var topArrow = topGroup.polygon("50, 0, 70, 40, 30, 40").size(20, 20);
     topArrow.cx(topBtn.cx());
     topArrow.cy(topBtn.cy());
-    var bottomBtn = group
+    var bottomGroup = group.group();
+    var bottomBtn = bottomGroup
       .rect(rect.height() / 6, rect.height() / 6)
       .fill({ color: pressedColor })
       .move(rect.x(), rect.y() + rect.height());
-    var bottomArrow = group.polygon("30, 0, 50, 40, 70, 0").size(20, 20);
+    var bottomArrow = bottomGroup.polygon("30, 0, 50, 40, 70, 0").size(20, 20);
     bottomArrow.cx(bottomBtn.cx());
     bottomArrow.cy(bottomBtn.cy());
     var thumb = group
@@ -400,14 +402,23 @@ var MyToolkit = (function () {
     thumb.cx(rect.cx());
 
     group.mouseover(function () {
-      rect.fill({ color: hoverColor });
+      // rect.fill({ color: hoverColor });
       // currentState = states.HOVER;
       // transition();
     });
-    rect.mouseout(function () {
-      rect.fill({ color: idleColor });
-      // currentState = states.IDLE;
-      // transition();
+    topGroup.click(function () {
+      let topMax = topArrow.height() + 10;
+      if (thumb.y() - 10 <= topMax) {
+        return;
+      }
+      thumb.y(thumb.y() - 10);
+    });
+    bottomGroup.click(function () {
+      let bottomMax = rect.height();
+      if (thumb.y() >= bottomMax) {
+        return;
+      }
+      thumb.y(thumb.y() + 10);
     });
     function transition() {
       if (stateEvent != null) {
@@ -431,6 +442,9 @@ var MyToolkit = (function () {
         bottomArrow.move(rect.x(), rect.y() + rect.height());
         bottomArrow.cx(rect.cx());
         bottomArrow.cy(bottomBtn.cy());
+      },
+      get thumbPosition() {
+        return thumb.y();
       },
     };
   };
