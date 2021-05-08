@@ -699,7 +699,7 @@ var MyToolkit = (function () {
       },
       /**
        * Increments the value of the progress bar by the given argument
-       * @param {number} value The value the progress bar should be incremented by. Value is a numerical value from 0-100s
+       * @param {number} value The value the progress bar should be incremented by. Value is a numerical value from 0-100
        * @memberof MyToolkit.ProgressBar
        * @instance
        */
