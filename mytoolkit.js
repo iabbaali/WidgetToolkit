@@ -175,7 +175,7 @@ var MyToolkit = (function () {
    * Creates the RadioButton widget and exposes the following methods:
    * move, widgetStateChanged, and checkStateChanged
    * @constructor
-   * @param {[[string, boolean]]} options An array that contains subarrays for each radio button. The first element of the subarray is the text next to the radio button and the second element is whether or not the button is selected. Only one button can be selected (true) at a time.
+   * @param {Array} options An array that contains subarrays for each radio button. The first element of the subarray is the text next to the radio button (string) and the second element is whether or not the button is selected (boolean). Only one button can be selected (true) at a time.
    * @returns {} RadioButton widget
    */
   var RadioButton = function (options) {
