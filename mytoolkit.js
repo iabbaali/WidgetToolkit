@@ -7,6 +7,11 @@ var pressedColor = "#002D62";
 var hoverColor = "#545AA7";
 var textColor = "#fff";
 
+/**
+ * This function represents the entire toolkit. The following widgets
+ * are available in this toolkit:
+ * Button, Checkbox, Radio Button, Text Box, Scroll Bar, Progress Bar, and Slider.
+ */
 var MyToolkit = (function () {
   const states = {
     IDLE: "idle",
@@ -15,6 +20,12 @@ var MyToolkit = (function () {
     HOVER: "hover",
     UPDATE: "update",
   };
+  /**
+   * Creates the Button widget and exposes the following methods:
+   * move, stateChanged, onclick, and text (setter)
+   * @constructor
+   * @returns {} Button widget
+   */
   var Button = function () {
     var clickEvent = null;
     var currentState = states.IDLE;
@@ -78,6 +89,12 @@ var MyToolkit = (function () {
       },
     };
   };
+  /**
+   * Creates the CheckBox widget and exposes the following methods:
+   * move, widgetStateChanged, checkStateChanged, and text (setter)
+   * @constructor
+   * @returns {} CheckBox widget
+   */
   var CheckBox = function () {
     const checkStates = {
       UNCHECKED: "unchecked",
@@ -154,6 +171,13 @@ var MyToolkit = (function () {
       },
     };
   };
+  /**
+   * Creates the RadioButton widget and exposes the following methods:
+   * move, widgetStateChanged, and checkStateChanged
+   * @constructor
+   * @param {[[string, boolean]]} options An array that contains subarrays for each radio button. The first element of the subarray is the text next to the radio button and the second element is whether or not the button is selected. Only one button can be selected (true) at a time.
+   * @returns {} RadioButton widget
+   */
   var RadioButton = function (options) {
     var checkStateEvent = null;
     var widgetStateEvent = null;
@@ -259,6 +283,12 @@ var MyToolkit = (function () {
       },
     };
   };
+  /**
+   * Creates the TextBox widget and exposes the following methods:
+   * move, widgetStateChanged, and textChanged
+   * @constructor
+   * @returns {} TextBox widget
+   */
   var TextBox = function () {
     var textChangedEvent = null;
     var widgetStateEvent = null;
@@ -359,6 +389,12 @@ var MyToolkit = (function () {
       },
     };
   };
+  /**
+   * Creates the ScrollBar widget and exposes the following methods:
+   * move, stateChanged, scrollThumbMoved, height (setter), and thumbPosition (getter)
+   * @constructor
+   * @returns {} ScrollBar widget
+   */
   var ScrollBar = function () {
     var scrollThumbEvent = null;
     var currentState = states.IDLE;
@@ -457,6 +493,12 @@ var MyToolkit = (function () {
       },
     };
   };
+  /**
+   * Creates the ProgressBar widget and exposes the following methods:
+   * move, stateChanged, progressIncremented, increment, width (setter), and incrementValue (setter and getter)
+   * @constructor
+   * @returns {} ProgressBar widget
+   */
   var ProgressBar = function () {
     var currentState = states.IDLE;
     var stateEvent = null;
@@ -531,6 +573,12 @@ var MyToolkit = (function () {
       },
     };
   };
+  /**
+   * Creates the Slider widget and exposes the following methods:
+   * move, stateChanged, tickChanged, ticks (setter), start (setter), and end (setter)
+   * @constructor
+   * @returns {} Slider widget
+   */
   var Slider = function () {
     var currentState = states.IDLE;
     var stateEvent = null;
