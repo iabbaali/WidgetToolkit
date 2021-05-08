@@ -65,6 +65,7 @@ progressbar.progressIncremented(function (event) {
 
 var textbox = new MyToolkit.TextBox();
 textbox.move(30, 100);
+console.log(textbox.text);
 textbox.textChanged(function (e) {
   console.log(e);
 });

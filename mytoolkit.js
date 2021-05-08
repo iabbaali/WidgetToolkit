@@ -479,6 +479,15 @@ var MyToolkit = (function () {
       textChanged: function (eventHandler) {
         textChangedEvent = eventHandler;
       },
+      /**
+       * The text in the text box
+       * @memberof MyToolkit.TextBox
+       * @instance
+       * @type {string}
+       */
+      get text() {
+        return text.text();
+      },
     };
   };
   /**
