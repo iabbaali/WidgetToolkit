@@ -688,6 +688,12 @@ var MyToolkit = (function () {
       progressIncremented: function (eventHandler) {
         incrementEvent = eventHandler;
       },
+      /**
+       * Increments the value of the progress bar by the given argument
+       * @param {number} value The value the progress bar should be incremented by. Value is a numerical value from 0-100s
+       * @memberof MyToolkit.ProgressBar
+       * @instance
+       */
       increment: function (value) {
         if (value >= 0 && value <= 100) {
           let currValue = (progress.width() * 100) / rect.width();
