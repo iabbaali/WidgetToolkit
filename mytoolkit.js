@@ -538,7 +538,133 @@ var MyToolkit = (function () {
       },
     };
   };
-  return { Button, CheckBox, RadioButton, TextBox, ScrollBar, ProgressBar };
+  var Slider = function () {
+    var currentState = states.IDLE;
+    var stateEvent = null;
+    var tickChangedEvent = null;
+    var ticks = [];
+    var sliderCircle = null;
+    var startContent = null;
+    var endContent = null;
+    var startValue = "";
+    var endValue = "";
+
+    var draw = SVG().addTo("body").size(250, 50);
+    var group = draw.group().attr({
+      stroke: pressedColor,
+      fill: idleColor,
+      strokeColor: "#000",
+      "stroke-width": 1,
+    });
+    var rect = group
+      .rect(200, 8)
+      .fill({ color: idleColor, opacity: 0.5 })
+      .radius(2);
+
+    function drawTicks(numTicks) {
+      let start = rect.x();
+      let spacing = rect.width() / (numTicks - 1);
+      for (let i = 0; i < numTicks; i++) {
+        let tick = group.rect(5, rect.height() + 10);
+        tick.attr({
+          stroke: pressedColor,
+          fill: idleColor,
+          strokeColor: pressedColor,
+          "stroke-width": 1,
+        });
+        tick.move(start, rect.y()).cy(rect.cy());
+        ticks.push(tick);
+        start += spacing;
+        tick.click(function () {
+          if (sliderCircle != null) {
+            sliderCircle.move(this.x(), this.y());
+            sliderCircle.cx(this.cx());
+            sliderCircle.cy(this.cy());
+            if (tickChangedEvent != null) {
+              tickChangedEvent(i);
+            }
+          }
+          currentState = states.UPDATE;
+          transition();
+        });
+      }
+      startContent = group.text(startValue).font({
+        family: "Lato, sans-serif",
+        color: pressedColor,
+        fill: pressedColor,
+        "stroke-width": 0,
+      });
+      startContent.move(ticks[0].x() - 5, ticks[0].y() + 10);
+      endContent = group.text(endValue).font({
+        family: "Lato, sans-serif",
+        color: pressedColor,
+        fill: pressedColor,
+        "stroke-width": 0,
+      });
+      endContent.move(ticks[ticks.length - 1].x() - 5, ticks[0].y() + 10);
+    }
+
+    function drawSliderCircle(tickNumber) {
+      let circle = group.circle(12).fill({ color: pressedColor });
+      circle.move(ticks[tickNumber].x(), ticks[tickNumber].y());
+      circle.cy(ticks[tickNumber].cy());
+      circle.cx(ticks[tickNumber].cx());
+      sliderCircle = circle;
+    }
+
+    group.mouseover(function () {
+      rect.fill({ color: hoverColor, opacity: 1 });
+      currentState = states.HOVER;
+      transition();
+    });
+    group.mouseout(function () {
+      rect.fill({ color: idleColor });
+      currentState = states.IDLE;
+      transition();
+    });
+
+    function transition() {
+      if (stateEvent != null) {
+        stateEvent(currentState);
+      }
+    }
+    return {
+      move: function (x, y) {
+        group.move(x, y);
+      },
+      stateChanged: function (eventHandler) {
+        stateEvent = eventHandler;
+      },
+      tickChanged: function (eventHandler) {
+        tickChangedEvent = eventHandler;
+      },
+      set ticks(t) {
+        drawTicks(t);
+        drawSliderCircle(0);
+      },
+      set start(content) {
+        startValue = content;
+        if (startContent != null) {
+          startContent.text(content);
+        }
+      },
+      set end(content) {
+        endValue = content;
+        if (endContent != null) {
+          endContent.text(content);
+        }
+      },
+    };
+  };
+  return {
+    Button,
+    CheckBox,
+    RadioButton,
+    TextBox,
+    ScrollBar,
+    ProgressBar,
+    Slider,
+  };
 })();
 
 export { MyToolkit };

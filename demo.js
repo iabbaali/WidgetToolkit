@@ -33,6 +33,18 @@ scrollbar.stateChanged(function (event) {
   console.log(event);
 });
 
+var slider = new MyToolkit.Slider();
+slider.ticks = 7;
+slider.start = "Low";
+slider.end = "High";
+slider.move(10, 10);
+slider.stateChanged(function (event) {
+  console.log(event);
+});
+slider.tickChanged(function (event) {
+  console.log(event);
+});
+
 var progressbar = new MyToolkit.ProgressBar();
 progressbar.width = 200;
 progressbar.move(10, 10);
@@ -48,7 +60,7 @@ progressbar.stateChanged(function (event) {
   console.log(event);
 });
 progressbar.progressIncremented(function (event) {
-  console.log(event);
+  // console.log(event);
 });
 
 var textbox = new MyToolkit.TextBox();
