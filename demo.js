@@ -60,7 +60,7 @@ progressbar.stateChanged(function (event) {
   console.log(event);
 });
 progressbar.progressIncremented(function (event) {
-  // console.log(event);
+  console.log(event);
 });
 
 var textbox = new MyToolkit.TextBox();
