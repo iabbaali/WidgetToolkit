@@ -24,6 +24,7 @@ var MyToolkit = (function () {
    * Creates the Button widget and exposes the following methods:
    * move, stateChanged, onclick, and text (setter)
    * @constructor
+   * @memberof MyToolkit
    * @returns {} Button widget
    */
   var Button = function () {
@@ -74,6 +75,12 @@ var MyToolkit = (function () {
       }
     }
     return {
+      /**
+       * Moves the button widget to the specified x and y coordinate
+       * @param {number} x x coordinate
+       * @param {number} y y coordinate
+       * @memberof MyToolkit.Button
+       */
       move: function (x, y) {
         group.move(x, y);
       },
