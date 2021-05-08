@@ -104,7 +104,7 @@ var MyToolkit = (function () {
         clickEvent = eventHandler;
       },
       /**
-       * Sets the text content inside the button
+       * The text content inside the button
        * @memberof MyToolkit.Button
        * @instance
        * @type {string}
@@ -182,15 +182,40 @@ var MyToolkit = (function () {
       }
     }
     return {
+      /**
+       * Moves the checkbox widget to the specified x and y coordinate
+       * @param {number} x x coordinate
+       * @param {number} y y coordinate
+       * @memberof MyToolkit.CheckBox
+       * @instance
+       */
       move: function (x, y) {
         group.move(x, y);
       },
+      /**
+       * Exposes an event handler that notifies consuming code when the widget state has changed
+       * @param {function} eventHandler An event handler for when the widget state changes
+       * @memberof MyToolkit.CheckBox
+       * @instance
+       */
       widgetStateChanged: function (eventHandler) {
         widgetStateEvent = eventHandler;
       },
+      /**
+       * Exposes an event handler that notifies consuming code when the checked state has changed
+       * @param {function} eventHandler An event handler for when the box is checked/unchecked
+       * @memberof MyToolkit.CheckBox
+       * @instance
+       */
       checkStateChanged: function (eventHandler) {
         checkStateEvent = eventHandler;
       },
+      /**
+       * The text content next to the check box
+       * @memberof MyToolkit.CheckBox
+       * @instance
+       * @type {string}
+       */
       set text(content) {
         text.text(content);
         text.x(box.x() + box.width());
@@ -300,12 +325,31 @@ var MyToolkit = (function () {
       });
     }
     return {
+      /**
+       * Moves the radio button widget to the specified x and y coordinate
+       * @param {number} x x coordinate
+       * @param {number} y y coordinate
+       * @memberof MyToolkit.RadioButton
+       * @instance
+       */
       move: function (x, y) {
         outer.move(x, y);
       },
+      /**
+       * Exposes an event handler that notifies consuming code when the widget state has changed
+       * @param {function} eventHandler An event handler for when the widget state changes
+       * @memberof MyToolkit.RadioButton
+       * @instance
+       */
       widgetStateChanged: function (eventHandler) {
         widgetStateEvent = eventHandler;
       },
+      /**
+       * Exposes an event handler that notifies consuming code when the checked state has changed and which n has been checked
+       * @param {function} eventHandler An event handler for when the checked state changes and to which n
+       * @memberof MyToolkit.RadioButton
+       * @instance
+       */
       checkStateChanged: function (eventHandler) {
         checkStateEvent = eventHandler;
       },
@@ -407,12 +451,31 @@ var MyToolkit = (function () {
       caret.hide();
     });
     return {
+      /**
+       * Moves the text box widget to the specified x and y coordinate
+       * @param {number} x x coordinate
+       * @param {number} y y coordinate
+       * @memberof MyToolkit.TextBox
+       * @instance
+       */
       move: function (x, y) {
         group.move(x, y);
       },
+      /**
+       * Exposes an event handler that notifies consuming code when the widget state has changed
+       * @param {function} eventHandler An event handler for when the widget state changes
+       * @memberof MyToolkit.TextBox
+       * @instance
+       */
       widgetStateChanged: function (eventHandler) {
         widgetStateEvent = eventHandler;
       },
+      /**
+       * Exposes an event handler that notifies consuming code when the text has changed
+       * @param {function} eventHandler An event handler for when the text changes
+       * @memberof MyToolkit.TextBox
+       * @instance
+       */
       textChanged: function (eventHandler) {
         textChangedEvent = eventHandler;
       },
@@ -501,15 +564,40 @@ var MyToolkit = (function () {
       }
     }
     return {
+      /**
+       * Moves the scroll bar widget to the specified x and y coordinate
+       * @param {number} x x coordinate
+       * @param {number} y y coordinate
+       * @memberof MyToolkit.ScrollBar
+       * @instance
+       */
       move: function (x, y) {
         group.move(x, y);
       },
+      /**
+       * Exposes an event handler that notifies consuming code when the widget state has changed
+       * @param {function} eventHandler An event handler for when the widget state changes
+       * @memberof MyToolkit.ScrollBar
+       * @instance
+       */
       stateChanged: function (eventHandler) {
         stateEvent = eventHandler;
       },
+      /**
+       * Exposes an event handler that notifies consuming code when the scroll thumb has moved and in which direction (up vs. down)
+       * @param {function} eventHandler An event handler for when the thumb moves up or down
+       * @memberof MyToolkit.ScrollBar
+       * @instance
+       */
       scrollThumbMoved: function (eventHandler) {
         scrollThumbEvent = eventHandler;
       },
+      /**
+       * The height of the scroll bar
+       * @memberof MyToolkit.ScrollBar
+       * @instance
+       * @type {number}
+       */
       set height(h) {
         rect.height(h);
         draw.height(h * 1.75);
@@ -518,6 +606,12 @@ var MyToolkit = (function () {
         bottomArrow.cx(rect.cx());
         bottomArrow.cy(bottomBtn.cy());
       },
+      /**
+       * The position of the scroll thumb
+       * @memberof MyToolkit.ScrollBar
+       * @instance
+       * @type {number}
+       */
       get thumbPosition() {
         return thumb.y();
       },
@@ -566,12 +660,31 @@ var MyToolkit = (function () {
       }
     }
     return {
+      /**
+       * Moves the progress bar widget to the specified x and y coordinate
+       * @param {number} x x coordinate
+       * @param {number} y y coordinate
+       * @memberof MyToolkit.ProgressBar
+       * @instance
+       */
       move: function (x, y) {
         group.move(x, y);
       },
+      /**
+       * Exposes an event handler that notifies consuming code when the widget state has changed
+       * @param {function} eventHandler An event handler for when the widget state changes
+       * @memberof MyToolkit.ProgressBar
+       * @instance
+       */
       stateChanged: function (eventHandler) {
         stateEvent = eventHandler;
       },
+      /**
+       * Exposes an event handler that notifies consuming code when the progress bar has incremented
+       * @param {function} eventHandler An event handler for when the progress bar increments
+       * @memberof MyToolkit.ProgressBar
+       * @instance
+       */
       progressIncremented: function (eventHandler) {
         incrementEvent = eventHandler;
       },
@@ -591,10 +704,22 @@ var MyToolkit = (function () {
           }
         }
       },
+      /**
+       * The width of the progress bar
+       * @memberof MyToolkit.ProgressBar
+       * @instance
+       * @type {number}
+       */
       set width(w) {
         rect.width(w);
         draw.width(w * 1.5);
       },
+      /**
+       * The increment value of the progress bar
+       * @memberof MyToolkit.ProgressBar
+       * @instance
+       * @type {number}
+       */
       set incrementValue(i) {
         let scaledValue = (i * rect.width()) / 100;
         progress.width(scaledValue);
@@ -704,25 +829,62 @@ var MyToolkit = (function () {
       }
     }
     return {
+      /**
+       * Moves the slider widget to the specified x and y coordinate
+       * @param {number} x x coordinate
+       * @param {number} y y coordinate
+       * @memberof MyToolkit.Slider
+       * @instance
+       */
       move: function (x, y) {
         group.move(x, y);
       },
+      /**
+       * Exposes an event handler that notifies consuming code when the widget state has changed
+       * @param {function} eventHandler An event handler for when the widget state changes
+       * @memberof MyToolkit.Slider
+       * @instance
+       */
       stateChanged: function (eventHandler) {
         stateEvent = eventHandler;
       },
+      /**
+       * Exposes an event handler that notifies consuming code the slider tick position has changed and to which tick (n)
+       * @param {function} eventHandler An event handler for when tick selected changes
+       * @memberof MyToolkit.Slider
+       * @instance
+       */
       tickChanged: function (eventHandler) {
         tickChangedEvent = eventHandler;
       },
+      /**
+       * The number of ticks within the slider
+       * @memberof MyToolkit.Slider
+       * @instance
+       * @type {number}
+       */
       set ticks(t) {
         drawTicks(t);
         drawSliderCircle(0);
       },
+      /**
+       * The text on the far left tick of the slider
+       * @memberof MyToolkit.Slider
+       * @instance
+       * @type {string}
+       */
       set start(content) {
         startValue = content;
         if (startContent != null) {
           startContent.text(content);
         }
       },
+      /**
+       * The text on the far right tick of the slider
+       * @memberof MyToolkit.Slider
+       * @instance
+       * @type {string}
+       */
       set end(content) {
         endValue = content;
         if (endContent != null) {
