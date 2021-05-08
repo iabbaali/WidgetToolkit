@@ -501,6 +501,7 @@ var MyToolkit = (function () {
     var scrollThumbEvent = null;
     var currentState = states.IDLE;
     var stateEvent = null;
+    var movingElement = null;
 
     var draw = SVG().addTo("body").size(50, 250);
     var group = draw.group().attr({
@@ -565,6 +566,27 @@ var MyToolkit = (function () {
       transition();
       if (scrollThumbEvent != null) {
         scrollThumbEvent("down");
+      }
+    });
+    thumb.mouseup(function () {
+      movingElement = null;
+    });
+    thumb.mousedown(function () {
+      movingElement = thumb;
+    });
+    SVG.on(thumb, "mouseleave", (event) => {
+      movingElement = null;
+    });
+    thumb.mousemove(function (event) {
+      if (movingElement != null) {
+        let newY = event.clientY - thumb.height();
+        if (newY >= rect.height() + 8) {
+          return;
+        }
+        if (newY - 16 <= topArrow.height()) {
+          return;
+        }
+        thumb.y(newY);
       }
     });
     function transition() {
