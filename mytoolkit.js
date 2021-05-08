@@ -80,16 +80,35 @@ var MyToolkit = (function () {
        * @param {number} x x coordinate
        * @param {number} y y coordinate
        * @memberof MyToolkit.Button
+       * @instance
        */
       move: function (x, y) {
         group.move(x, y);
       },
+      /**
+       * Exposes an event handler that notifies consuming code when the widget state has changed
+       * @param {function} eventHandler An event handler for when the widget state changes
+       * @memberof MyToolkit.Button
+       * @instance
+       */
       stateChanged: function (eventHandler) {
         stateEvent = eventHandler;
       },
+      /**
+       * Exposes an event handler that notifies consuming code when the button is clicked
+       * @param {function} eventHandler An event handler for when the button is clicked
+       * @memberof MyToolkit.Button
+       * @instance
+       */
       onclick: function (eventHandler) {
         clickEvent = eventHandler;
       },
+      /**
+       * Sets the text content inside the button
+       * @memberof MyToolkit.Button
+       * @instance
+       * @type {string}
+       */
       set text(content) {
         text.text(content);
         text.center(rect.width() / 2, rect.height() / 2);
@@ -100,6 +119,7 @@ var MyToolkit = (function () {
    * Creates the CheckBox widget and exposes the following methods:
    * move, widgetStateChanged, checkStateChanged, and text (setter)
    * @constructor
+   * @memberof MyToolkit
    * @returns {} CheckBox widget
    */
   var CheckBox = function () {
@@ -182,7 +202,8 @@ var MyToolkit = (function () {
    * Creates the RadioButton widget and exposes the following methods:
    * move, widgetStateChanged, and checkStateChanged
    * @constructor
-   * @param {Array} options An array that contains subarrays for each radio button. The first element of the subarray is the text next to the radio button (string) and the second element is whether or not the button is selected (boolean). Only one button can be selected (true) at a time.
+   * @param {Array} options An array that contains subarrays for each radio button ([[string, boolean]]). The first element of the subarray is the text next to the radio button (string) and the second element is whether or not the button is selected (boolean). Only one button can be selected (true) at a time.
+   * @memberof MyToolkit
    * @returns {} RadioButton widget
    */
   var RadioButton = function (options) {
@@ -294,6 +315,7 @@ var MyToolkit = (function () {
    * Creates the TextBox widget and exposes the following methods:
    * move, widgetStateChanged, and textChanged
    * @constructor
+   * @memberof MyToolkit
    * @returns {} TextBox widget
    */
   var TextBox = function () {
@@ -400,6 +422,7 @@ var MyToolkit = (function () {
    * Creates the ScrollBar widget and exposes the following methods:
    * move, stateChanged, scrollThumbMoved, height (setter), and thumbPosition (getter)
    * @constructor
+   * @memberof MyToolkit
    * @returns {} ScrollBar widget
    */
   var ScrollBar = function () {
@@ -504,6 +527,7 @@ var MyToolkit = (function () {
    * Creates the ProgressBar widget and exposes the following methods:
    * move, stateChanged, progressIncremented, increment, width (setter), and incrementValue (setter and getter)
    * @constructor
+   * @memberof MyToolkit
    * @returns {} ProgressBar widget
    */
   var ProgressBar = function () {
@@ -584,6 +608,7 @@ var MyToolkit = (function () {
    * Creates the Slider widget and exposes the following methods:
    * move, stateChanged, tickChanged, ticks (setter), start (setter), and end (setter)
    * @constructor
+   * @memberof MyToolkit
    * @returns {} Slider widget
    */
   var Slider = function () {
