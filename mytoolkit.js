@@ -86,7 +86,6 @@ var MyToolkit = (function () {
 
     var currentCheckState = checkStates.UNCHECKED;
     var currentWidgetState = states.IDLE;
-
     var checkStateEvent = null;
     var widgetStateEvent = null;
 
@@ -97,12 +96,10 @@ var MyToolkit = (function () {
     line1.stroke({ color: pressedColor, width: 3, linecap: "round" });
     line1.center(box.cx(), box.cy());
     line1.hide();
-
     var line2 = group.line(box.x(), box.y(), box.x() + 20, box.y() + 20);
     line2.stroke({ color: pressedColor, width: 3, linecap: "round" });
     line2.center(box.cx(), box.cy());
     line2.hide();
-
     var text = group.text("").font({ family: "Lato, sans-serif" });
     text.x(box.x() + box.width());
     text.cy(box.cy());
@@ -160,7 +157,6 @@ var MyToolkit = (function () {
   var RadioButton = function (options) {
     var checkStateEvent = null;
     var widgetStateEvent = null;
-
     var currentWidgetState = states.IDLE;
 
     const clearOptions = () => {
@@ -280,11 +276,9 @@ var MyToolkit = (function () {
         "stroke-width": 1.5,
       })
       .radius(5);
-
     var text = group.text("").font({ family: "Lato, sans-serif", size: 12 });
     text.x(box.x());
     text.cy(box.cy());
-
     var caret = group.rect(2, 15).fill({ color: hoverColor });
     caret.move(box.x() + text.length(), box.y());
     caret.cy(box.cy());
@@ -479,7 +473,6 @@ var MyToolkit = (function () {
       .rect(200, 15)
       .fill({ color: idleColor, opacity: 0.5 })
       .radius(2);
-
     var progress = group.rect(0, 14).fill({ color: pressedColor }).radius(2);
     progress.cy(rect.cy());
 
@@ -593,15 +586,17 @@ var MyToolkit = (function () {
         color: pressedColor,
         fill: pressedColor,
         "stroke-width": 0,
+        size: 13,
       });
-      startContent.move(ticks[0].x() - 5, ticks[0].y() + 10);
+      startContent.move(ticks[0].x() - 5, ticks[0].y() + 12);
       endContent = group.text(endValue).font({
         family: "Lato, sans-serif",
         color: pressedColor,
         fill: pressedColor,
         "stroke-width": 0,
+        size: 13,
       });
-      endContent.move(ticks[ticks.length - 1].x() - 5, ticks[0].y() + 10);
+      endContent.move(ticks[ticks.length - 1].x() - 5, ticks[0].y() + 12);
     }
 
     function drawSliderCircle(tickNumber) {
