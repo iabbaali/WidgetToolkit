@@ -33,7 +33,6 @@ var MyToolkit = (function () {
     var currentState = states.IDLE;
     var stateEvent = null;
 
-    // var draw = SVG().addTo("body");
     var group = draw.group();
     var rect = group.rect(100, 50).fill({ color: idleColor }).radius(20);
     var text = group
@@ -134,7 +133,6 @@ var MyToolkit = (function () {
     var checkStateEvent = null;
     var widgetStateEvent = null;
 
-    // var draw = SVG().addTo("body");
     var group = draw.group();
     var box = group.rect(30, 30).fill({ color: idleColor }).radius(10);
     var line1 = group.line(box.x() - 20, box.y() + 20, box.x(), box.y());
@@ -279,7 +277,6 @@ var MyToolkit = (function () {
     let outerBoxes = [];
     let innerBoxes = [];
 
-    // var draw = SVG().addTo("body").size("100%", "100%");
     var outer = draw.group();
     var currY = null;
     for (let opt of options) {
@@ -368,7 +365,6 @@ var MyToolkit = (function () {
     var widgetStateEvent = null;
     var currentWidgetState = states.IDLE;
 
-    // var draw = SVG().addTo("body");
     var group = draw.group();
     var box = group
       .rect(225, 30)
@@ -505,7 +501,6 @@ var MyToolkit = (function () {
     var movingElement = null;
     var direction = null;
 
-    // var draw = SVG().addTo("body").size(50, 250);
     var group = draw.group().attr({
       stroke: pressedColor,
       fill: idleColor,
@@ -671,7 +666,6 @@ var MyToolkit = (function () {
     var stateEvent = null;
     var incrementEvent = null;
 
-    // var draw = SVG().addTo("body").size(225, 50);
     var group = draw.group().attr({
       stroke: pressedColor,
       fill: idleColor,
@@ -797,7 +791,6 @@ var MyToolkit = (function () {
     var startValue = "";
     var endValue = "";
 
-    // var draw = SVG().addTo("body").size(250, 50);
     var group = draw.group().attr({
       stroke: pressedColor,
       fill: idleColor,
