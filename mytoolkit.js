@@ -6,6 +6,7 @@ var idleColor = "#7CB9E8";
 var pressedColor = "#002D62";
 var hoverColor = "#545AA7";
 var textColor = "#fff";
+var draw = SVG().addTo("body").size("100%", "100%");
 
 /**
  * This function represents the entire toolkit. The following widgets
@@ -32,7 +33,7 @@ var MyToolkit = (function () {
     var currentState = states.IDLE;
     var stateEvent = null;
 
-    var draw = SVG().addTo("body");
+    // var draw = SVG().addTo("body");
     var group = draw.group();
     var rect = group.rect(100, 50).fill({ color: idleColor }).radius(20);
     var text = group
@@ -133,7 +134,7 @@ var MyToolkit = (function () {
     var checkStateEvent = null;
     var widgetStateEvent = null;
 
-    var draw = SVG().addTo("body");
+    // var draw = SVG().addTo("body");
     var group = draw.group();
     var box = group.rect(30, 30).fill({ color: idleColor }).radius(10);
     var line1 = group.line(box.x() - 20, box.y() + 20, box.x(), box.y());
@@ -278,7 +279,7 @@ var MyToolkit = (function () {
     let outerBoxes = [];
     let innerBoxes = [];
 
-    var draw = SVG().addTo("body").size("100%", "100%");
+    // var draw = SVG().addTo("body").size("100%", "100%");
     var outer = draw.group();
     var currY = null;
     for (let opt of options) {
@@ -299,7 +300,7 @@ var MyToolkit = (function () {
       }
       currY = group.y() + box.height();
     }
-    draw.size("100%", currY * 2);
+    // draw.size("100%", currY * 2);
     updateState(options, innerBoxes);
 
     for (let i = 0; i < options.length; ++i) {
@@ -367,7 +368,7 @@ var MyToolkit = (function () {
     var widgetStateEvent = null;
     var currentWidgetState = states.IDLE;
 
-    var draw = SVG().addTo("body");
+    // var draw = SVG().addTo("body");
     var group = draw.group();
     var box = group
       .rect(225, 30)
@@ -504,7 +505,7 @@ var MyToolkit = (function () {
     var movingElement = null;
     var direction = null;
 
-    var draw = SVG().addTo("body").size(50, 250);
+    // var draw = SVG().addTo("body").size(50, 250);
     var group = draw.group().attr({
       stroke: pressedColor,
       fill: idleColor,
@@ -575,14 +576,14 @@ var MyToolkit = (function () {
     thumb.mousedown(function () {
       movingElement = thumb;
     });
-    SVG.on(thumb, "mouseleave", (event) => {
-      movingElement = null;
+    SVG.on(group, "mouseleave", (event) => {
       if (scrollThumbEvent != null && direction != null) {
         scrollThumbEvent(direction);
         direction = null;
       }
+      movingElement = null;
     });
-    thumb.mousemove(function (event) {
+    group.mousemove(function (event) {
       if (movingElement != null) {
         let newY = event.clientY - thumb.height();
         if (newY >= rect.height() + 8) {
@@ -670,7 +671,7 @@ var MyToolkit = (function () {
     var stateEvent = null;
     var incrementEvent = null;
 
-    var draw = SVG().addTo("body").size(225, 50);
+    // var draw = SVG().addTo("body").size(225, 50);
     var group = draw.group().attr({
       stroke: pressedColor,
       fill: idleColor,
@@ -759,7 +760,9 @@ var MyToolkit = (function () {
        */
       set width(w) {
         rect.width(w);
-        draw.width(w * 1.5);
+        if (draw.width() < w) {
+          draw.width(w * 1.5);
+        }
       },
       /**
        * The increment value of the progress bar
@@ -794,7 +797,7 @@ var MyToolkit = (function () {
     var startValue = "";
     var endValue = "";
 
-    var draw = SVG().addTo("body").size(250, 50);
+    // var draw = SVG().addTo("body").size(250, 50);
     var group = draw.group().attr({
       stroke: pressedColor,
       fill: idleColor,
