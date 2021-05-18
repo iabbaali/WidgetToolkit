@@ -14,7 +14,7 @@ btn.stateChanged(function (event) {
 
 var checkbox = new MyToolkit.CheckBox();
 checkbox.text = "Checkbox 1";
-checkbox.move(50, 50);
+checkbox.move(200, 20);
 checkbox.checkStateChanged(function (e) {
   console.log("Check state changed: " + e);
 });
@@ -23,8 +23,8 @@ checkbox.widgetStateChanged(function (event) {
 });
 
 var scrollbar = new MyToolkit.ScrollBar();
-scrollbar.height = 150;
-scrollbar.move(10, 10);
+scrollbar.height = 200;
+scrollbar.move(800, 10);
 scrollbar.scrollThumbMoved(function (e) {
   console.log("Scroll thumb moved: " + e);
 });
@@ -36,7 +36,7 @@ var slider = new MyToolkit.Slider();
 slider.ticks = 7;
 slider.start = "Low";
 slider.end = "High";
-slider.move(10, 10);
+slider.move(10, 90);
 slider.stateChanged(function (event) {
   console.log("Slider state changed: " + event);
 });
@@ -46,7 +46,7 @@ slider.tickChanged(function (event) {
 
 var progressbar = new MyToolkit.ProgressBar();
 progressbar.width = 200;
-progressbar.move(10, 10);
+progressbar.move(350, 20);
 setInterval(loopProgressBar, 1000);
 function loopProgressBar() {
   if (progressbar.incrementValue >= 100) {
@@ -63,7 +63,7 @@ progressbar.progressIncremented(function (event) {
 });
 
 var textbox = new MyToolkit.TextBox();
-textbox.move(30, 100);
+textbox.move(275, 75);
 textbox.textChanged(function (e) {
   console.log("Text in textbox changed: " + e);
 });
@@ -77,7 +77,7 @@ var options = [
   ["RadioButton 2", true],
 ];
 var radiobutton = new MyToolkit.RadioButton(options);
-radiobutton.move(30, 10);
+radiobutton.move(600, 10);
 radiobutton.checkStateChanged(function (e) {
   console.log("Radio button check state changed: " + e);
 });
